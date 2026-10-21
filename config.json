@@ -3,6 +3,10 @@
     {
       "name": "Section 01",
       "code": "CEE-PD-CONCRETE"
+    },
+    {
+      "name": "Section 02",
+      "code": "PDC-02-BC9A"
     }
   ],
   "maxAttempts": 2
