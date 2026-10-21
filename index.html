@@ -669,7 +669,7 @@ function evalDesign(sc, sol, d){
   const ratio = cost / sol.best.cost;
   const adequate = adeqPts === 25;
   let costPts = 0;
-  if(adequate && dowelPts === 5 && basePts === 4){ costPts = ratio <= 1.02 ? 15 : Math.max(0, 15*(1 - (ratio-1.02)/0.30)); }
+  if(adequate && dowelPts === 5 && basePts === 4){ costPts = ratio <= 1.02 ? 15 : ratio <= 1.10 ? 12 : Math.max(0, 12*(1 - (ratio-1.10)/0.20)); }
   costPts = Math.round(costPts*10)/10;
   let capacity = Math.pow(10, logW18R(d.D, sol.zr, sc.S0, sol.dPSI, sc.pt, sc.Sc, sc.Cd, l.J, sc.Ec, b.k));
   if(adequate) capacity = Math.max(capacity, sol.W18);
@@ -1261,7 +1261,7 @@ function cssVar(n){ return getComputedStyle(document.documentElement).getPropert
 function renderBuild(p, sc, sol){
   const d = att.draft || {base:"gran", lt:"dowel-ac", D:10, L:15};
   p.innerHTML = `<div><span class="label">Milepost 4 · 55 points</span><h2>Build the section, slab by slab</h2></div>
-    <p>Pick a base, a load transfer system, the slab thickness and the joint spacing. Points: 25 for slab thickness against your chosen k and J, 6 for joint spacing, 5 for dowels where required, 4 for a stabilized base where required, and 15 for cost against the cheapest adequate section (only if every check passes).</p>
+    <p>Pick a base, a load transfer system, the slab thickness and the joint spacing. Points: 25 for slab thickness against your chosen k and J, 6 for joint spacing, 5 for dowels where required, 4 for a stabilized base where required, and 15 for cost against the cheapest adequate section (only if every check passes): within 2% earns 15, within 10% earns 12, then fewer points down to zero at 30% over.</p>
     <div class="stack" style="gap:8px"><span class="label">Base</span><div class="choices">
       ${sc.bases.map(b=>`<label class="choice"><input type="radio" name="base" id="base-${b.id}" value="${b.id}" ${d.base===b.id?"checked":""}><span><b>${esc(b.name)}</b><span class="hint mono">k = ${fmt0(b.k)} pci · $${fmt(b.cost)}/yd²</span></span></label>`).join("")}
     </div></div>
